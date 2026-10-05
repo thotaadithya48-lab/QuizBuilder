@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Builder | Admin</title>
+
+    <link rel="stylesheet" href="admin.css">
+
+</head>
+
+<body>
+
+<header class="admin-header">
+
+    <div class="admin-logo">
+        🧠 Quiz Builder
+        <span>Admin Panel</span>
+    </div>
+
+    <div class="header-actions">
+
+        <button onclick="toggleAdminTheme()">
+            🌙 Theme
+        </button>
+
+        <button onclick="logoutAdmin()">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <button onclick="showAdminSection('dashboard')">
+            📊 Dashboard
+        </button>
+
+        <button onclick="showAdminSection('quizzes')">
+            🧠 Quizzes
+        </button>
+
+        <button onclick="showAdminSection('questions')">
+            ❓ Questions
+        </button>
+
+        <button onclick="showAdminSection('users')">
+            👥 Users
+        </button>
+
+        <button onclick="showAdminSection('results')">
+            📈 Results
+        </button>
+
+        <button onclick="showAdminSection('categories')">
+            📚 Categories
+        </button>
+
+        <button onclick="showAdminSection('reports')">
+            📋 Reports
+        </button>
+
+    </aside>
+
+
+    <main>
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboard" class="admin-section active">
+
+            <h1>Dashboard</h1>
+
+            <p class="subtitle">
+                Welcome to the Quiz Builder administration panel.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <span>🧠</span>
+                    <b id="quizCount">0</b>
+                    <p>Total Quizzes</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>👥</span>
+                    <b id="userCount">0</b>
+                    <p>Total Users</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>❓</span>
+                    <b id="questionCount">0</b>
+                    <p>Questions</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>🎮</span>
+                    <b id="playCount">0</b>
+                    <p>Quiz Attempts</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>⭐</span>
+                    <b id="averageScore">0%</b>
+                    <p>Average Score</p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>Recent Activity</h2>
+
+                <div id="recentActivity"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUIZZES -->
+
+        <section id="quizzes" class="admin-section">
+
+            <div class="section-title">
+
+                <div>
+                    <h1>Quiz Management</h1>
+                    <p>Manage all quizzes.</p>
+                </div>
+
+                <button
+                    class="primary"
+                    onclick="openQuizModal()">
+                    + Add Quiz
+                </button>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="search-admin">
+
+                    <input
+                        id="adminQuizSearch"
+                        placeholder="Search quizzes..."
+                        oninput="renderAdminQuizzes()">
+
+                </div>
+
+                <div id="quizTable"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUESTIONS -->
+
+        <section id="questions" class="admin-section">
+
+            <h1>Question Management</h1>
+
+            <div class="panel">
+
+                <div id="questionTable"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- USERS -->
+
+        <section id="users" class="admin-section">
+
+            <h1>User Management</h1>
+
+            <div class="panel">
+
+                <div id="usersTable"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESULTS -->
+
+        <section id="results" class="admin-section">
+
+            <h1>Quiz Results</h1>
+
+            <div class="panel">
+
+                <div id="resultsTable"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CATEGORIES -->
+
+        <section id="categories" class="admin-section">
+
+            <h1>Category Management</h1>
+
+            <div class="panel">
+
+                <div class="add-row">
+
+                    <input
+                        id="newCategory"
+                        placeholder="Enter category">
+
+                    <button
+                        class="primary"
+                        onclick="addCategory()">
+                        Add Category
+                    </button>
+
+                </div>
+
+                <div id="categoryList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REPORTS -->
+
+        <section id="reports" class="admin-section">
+
+            <h1>📋 Quiz Reports</h1>
+
+            <div class="report-grid">
+
+                <div class="report-card">
+
+                    <h3>Most Popular Quiz</h3>
+
+                    <b id="popularQuiz">-</b>
+
+                </div>
+
+                <div class="report-card">
+
+                    <h3>Highest Score</h3>
+
+                    <b id="highestScore">0%</b>
+
+                </div>
+
+                <div class="report-card">
+
+                    <h3>Total Attempts</h3>
+
+                    <b id="totalAttempts">0</b>
+
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <h2>Performance Overview</h2>
+
+                <div id="performanceBars"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- QUIZ MODAL -->
+
+<div id="quizModal" class="modal">
+
+    <div class="modal-content">
+
+        <button
+            class="close"
+            onclick="closeQuizModal()">
+            ×
+        </button>
+
+        <h2 id="modalTitle">Add Quiz</h2>
+
+        <input
+            id="adminQuizTitle"
+            placeholder="Quiz title">
+
+        <textarea
+            id="adminQuizDescription"
+            placeholder="Quiz description">
+        </textarea>
+
+        <select id="adminQuizCategory">
+            <option>Programming</option>
+            <option>Science</option>
+            <option>Mathematics</option>
+            <option>Technology</option>
+            <option>General Knowledge</option>
+            <option>History</option>
+        </select>
+
+        <select id="adminQuizDifficulty">
+            <option>Easy</option>
+            <option>Medium</option>
+            <option>Hard</option>
+        </select>
+
+        <input
+            id="adminQuizTime"
+            type="number"
+            value="60"
+            placeholder="Time">
+
+        <button
+            class="primary"
+            onclick="saveAdminQuiz()">
+            Save Quiz
+        </button>
+
+        <p id="modalMessage"></p>
+
+    </div>
+
+</div>
+
+
+<script src="admin.js"></script>
+
+</body>
+</html>

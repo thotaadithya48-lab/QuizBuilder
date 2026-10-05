@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Builder | User</title>
+    <link rel="stylesheet" href="user.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        🧠 <span>Quiz Builder</span>
+    </div>
+
+    <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Search quizzes...">
+        <button onclick="searchQuizzes()">🔍</button>
+    </div>
+
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <nav id="navigation">
+        <button onclick="showSection('home')">Home</button>
+        <button onclick="showSection('quizzes')">Quizzes</button>
+        <button onclick="showSection('categories')">Categories</button>
+        <button onclick="showSection('create')">➕ Create</button>
+        <button onclick="showSection('leaderboard')">🏆 Leaderboard</button>
+        <button onclick="showSection('results')">📊 My Results</button>
+        <button onclick="showSection('login')">Login</button>
+        <button onclick="toggleTheme()">🌙 Theme</button>
+    </nav>
+</header>
+
+<main>
+
+<!-- HOME -->
+<section id="home" class="section active">
+
+    <div class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">CREATE • PLAY • LEARN • COMPETE</p>
+
+            <h1>Build. Play. <span>Master.</span></h1>
+
+            <p>
+                Create interactive quizzes, challenge your friends,
+                test your knowledge and track your performance.
+            </p>
+
+            <div class="hero-buttons">
+                <button class="primary" onclick="showSection('quizzes')">
+                    Explore Quizzes
+                </button>
+
+                <button class="secondary" onclick="showSection('create')">
+                    Create Quiz
+                </button>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <div class="brain">🧠</div>
+            <h2>Quiz Builder</h2>
+            <p>Test your knowledge in a fun way!</p>
+        </div>
+    </div>
+
+    <h2>🔥 Popular Quizzes</h2>
+    <div id="popularQuizzes" class="quiz-grid"></div>
+
+</section>
+
+
+<!-- QUIZZES -->
+<section id="quizzes" class="section">
+
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">EXPLORE</p>
+            <h2>Available Quizzes</h2>
+        </div>
+
+        <select id="difficultyFilter" onchange="filterQuizzes()">
+            <option value="All">All Difficulty</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+    </div>
+
+    <div class="filter-row">
+        <button onclick="filterCategory('All')">All</button>
+        <button onclick="filterCategory('Programming')">Programming</button>
+        <button onclick="filterCategory('Science')">Science</button>
+        <button onclick="filterCategory('General Knowledge')">General Knowledge</button>
+        <button onclick="filterCategory('Mathematics')">Mathematics</button>
+        <button onclick="filterCategory('Technology')">Technology</button>
+    </div>
+
+    <div id="quizContainer" class="quiz-grid"></div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+<section id="categories" class="section">
+
+    <h2>📚 Quiz Categories</h2>
+
+    <div class="category-grid">
+
+        <button onclick="filterCategory('Programming')">
+            💻 <span>Programming</span>
+        </button>
+
+        <button onclick="filterCategory('Science')">
+            🔬 <span>Science</span>
+        </button>
+
+        <button onclick="filterCategory('Mathematics')">
+            ➗ <span>Mathematics</span>
+        </button>
+
+        <button onclick="filterCategory('Technology')">
+            🤖 <span>Technology</span>
+        </button>
+
+        <button onclick="filterCategory('General Knowledge')">
+            🌎 <span>General Knowledge</span>
+        </button>
+
+        <button onclick="filterCategory('History')">
+            🏛️ <span>History</span>
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- QUIZ DETAILS -->
+<section id="quizDetails" class="section">
+
+    <div id="quizDetailContainer"></div>
+
+</section>
+
+
+<!-- PLAY QUIZ -->
+<section id="playQuiz" class="section">
+
+    <div class="quiz-player">
+
+        <div class="quiz-top">
+
+            <div>
+                <span id="playQuizTitle">Quiz</span>
+            </div>
+
+            <div class="timer">
+                ⏱️ <span id="timer">60</span>s
+            </div>
+
+        </div>
+
+        <div class="progress-container">
+            <div id="progressBar"></div>
+        </div>
+
+        <div class="question-number">
+            Question <span id="questionNumber">1</span>
+        </div>
+
+        <h2 id="questionText">Question</h2>
+
+        <div id="answerContainer"></div>
+
+        <div class="quiz-navigation">
+
+            <button class="secondary" onclick="previousQuestion()">
+                ← Previous
+            </button>
+
+            <button class="primary" id="nextButton" onclick="nextQuestion()">
+                Next →
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RESULT -->
+<section id="quizResult" class="section">
+
+    <div class="result-card">
+
+        <div class="result-icon">🎉</div>
+
+        <h1>Quiz Completed!</h1>
+
+        <p id="resultMessage"></p>
+
+        <div class="score-circle">
+            <span id="finalScore">0%</span>
+        </div>
+
+        <div class="result-stats">
+
+            <div>
+                <b id="correctAnswers">0</b>
+                <span>Correct</span>
+            </div>
+
+            <div>
+                <b id="wrongAnswers">0</b>
+                <span>Wrong</span>
+            </div>
+
+            <div>
+                <b id="totalQuestions">0</b>
+                <span>Total</span>
+            </div>
+
+        </div>
+
+        <button class="primary" onclick="showSection('quizzes')">
+            Try Another Quiz
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- CREATE QUIZ -->
+<section id="create" class="section">
+
+    <div class="form-box">
+
+        <p class="eyebrow">QUIZ BUILDER</p>
+
+        <h2>➕ Create Your Quiz</h2>
+
+        <input id="quizTitle" placeholder="Quiz title">
+
+        <textarea
+            id="quizDescription"
+            placeholder="Quiz description">
+        </textarea>
+
+        <select id="quizCategory">
+            <option>Programming</option>
+            <option>Science</option>
+            <option>Mathematics</option>
+            <option>Technology</option>
+            <option>General Knowledge</option>
+            <option>History</option>
+        </select>
+
+        <select id="quizDifficulty">
+            <option>Easy</option>
+            <option>Medium</option>
+            <option>Hard</option>
+        </select>
+
+        <input
+            id="quizTime"
+            type="number"
+            placeholder="Time per quiz in seconds"
+            value="60">
+
+        <label class="check-label">
+            <input id="randomizeQuestions" type="checkbox">
+            Randomize questions
+        </label>
+
+        <h3>Questions</h3>
+
+        <div id="questionBuilder"></div>
+
+        <button class="secondary" onclick="addQuestionField()">
+            + Add Question
+        </button>
+
+        <button class="primary" onclick="createQuiz()">
+            Create Quiz
+        </button>
+
+        <p id="createMessage"></p>
+
+    </div>
+
+</section>
+
+
+<!-- LEADERBOARD -->
+<section id="leaderboard" class="section">
+
+    <h2>🏆 Global Leaderboard</h2>
+
+    <div class="leaderboard-card">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Quiz</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody id="leaderboardBody"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- RESULTS -->
+<section id="results" class="section">
+
+    <h2>📊 My Results</h2>
+
+    <div id="myResults" class="results-grid"></div>
+
+</section>
+
+
+<!-- LOGIN -->
+<section id="login" class="section">
+
+    <div class="form-box small">
+
+        <h2>👤 User Login</h2>
+
+        <input id="loginEmail" type="email" placeholder="Email">
+
+        <input id="loginPassword" type="password" placeholder="Password">
+
+        <button class="primary" onclick="loginUser()">
+            Login
+        </button>
+
+        <p id="loginMessage"></p>
+
+        <p class="demo">
+            Demo: user@gmail.com / 123456
+        </p>
+
+        <p>
+            Don't have an account?
+            <a href="#" onclick="showSection('register')">
+                Register
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- REGISTER -->
+<section id="register" class="section">
+
+    <div class="form-box small">
+
+        <h2>📝 Create Account</h2>
+
+        <input id="registerName" placeholder="Full name">
+
+        <input id="registerEmail" type="email" placeholder="Email">
+
+        <input
+            id="registerPassword"
+            type="password"
+            placeholder="Password">
+
+        <input
+            id="confirmPassword"
+            type="password"
+            placeholder="Confirm password">
+
+        <button class="primary" onclick="registerUser()">
+            Register
+        </button>
+
+        <p id="registerMessage"></p>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <h2>🧠 Quiz Builder</h2>
+
+    <p>Create • Play • Learn • Compete</p>
+
+    <p>© 2026 Quiz Builder</p>
+
+</footer>
+
+
+<script src="user.js"></script>
+
+</body>
+</html>
